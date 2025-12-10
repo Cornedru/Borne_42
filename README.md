@@ -1,11 +1,65 @@
 # Infrastructure Borne Arcade (Recalbox)
 
-## Usage
-- **Configuration** : Editer `config/recalbox.conf`
-- **Déploiement Conf** : `make deploy`
-- **Déploiement Roms** : `make deploy-roms`
-- **Redémarrage** : `make restart`
-- **Logs** : `make logs`
+graph TD
+    %% --- Styles ---
+    classDef git fill:#F05032,stroke:#333,stroke-width:2px,color:white;
+    classDef pi fill:#C51A4A,stroke:#333,stroke-width:2px,color:white;
+    classDef local fill:#2C3E50,stroke:#333,stroke-width:2px,color:white;
+    classDef file fill:#E1E1E1,stroke:#333,stroke-width:1px,color:black,stroke-dasharray: 5 5;
+
+    %% --- Local Environment ---
+    subgraph Workstation [💻 Local Dev / DevOps]
+        direction TB
+        Makefile[⚙️ Makefile Orchestrator]:::local
+        
+        subgraph Sources [Source Code]
+            Config[📄 recalbox.conf]:::file
+            Scripts[📜 Custom Scripts]:::file
+            Bios[🧬 BIOS Files]:::file
+        end
+    end
+
+    %% --- Remote Git ---
+    subgraph GitHub [☁️ Remote Repository]
+        MainBranch[ Branch: main]:::git
+    end
+
+    %% --- Production ---
+    subgraph Arcade [🕹️ Borne Arcade / Raspberry Pi]
+        direction TB
+        
+        subgraph Runtime [Service Layer]
+            ES(EmulationStation):::pi
+            RetroArch(RetroArch Cores):::pi
+        end
+
+        subgraph FS [📁 File System / SHARE]
+            DestConfig[/recalbox/share/system/]
+            DestBios[/recalbox/share/bios/]
+            DestRoms[/recalbox/share/roms/]
+        end
+    end
+
+    %% --- Flows ---
+    
+    %% 1. Versioning Flow
+    Sources -->|git add + commit| Workstation
+    Workstation -->|git push| MainBranch
+
+    %% 2. Deployment Flow (Via Makefile)
+    Makefile --"1. make deploy-conf (rsync)"--> DestConfig
+    Makefile --"2. make deploy-bios (rsync)"--> DestBios
+    Makefile --"3. make deploy-roms (rsync)"--> DestRoms
+    
+    %% 3. Logic Links
+    Config -.-> DestConfig
+    Bios -.-> DestBios
+    
+    %% 4. Runtime Actions
+    Makefile --"4. make restart (SSH)"--> ES
+    ES -->|Loads| DestConfig
+    RetroArch -->|Reads| DestBios
+    RetroArch -->|Loads| DestRoms
 
 ## GPIO Mapping
 Le driver `mk_arcade_joystick_rpi` est activé. Brancher les sticks sur le header GPIO standard.

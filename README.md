@@ -1,5 +1,6 @@
 # Infrastructure Borne Arcade (Recalbox)
 
+```mermaid
 graph TD
     %% --- Styles ---
     classDef git fill:#F05032,stroke:#333,stroke-width:2px,color:white;
@@ -60,6 +61,7 @@ graph TD
     ES -->|Loads| DestConfig
     RetroArch -->|Reads| DestBios
     RetroArch -->|Loads| DestRoms
+```
 
 ## GPIO Mapping
 Le driver `mk_arcade_joystick_rpi` est activé. Brancher les sticks sur le header GPIO standard.

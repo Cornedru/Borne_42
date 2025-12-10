@@ -63,6 +63,27 @@ graph TD
     RetroArch -->|Loads| DestRoms
 ```
 
+```mermaid
+graph LR
+    %% Noeuds principaux
+    PC[💻 Mon PC<br/>(Code & Config)]
+    GitHub[☁️ GitHub<br/>(Sauvegarde)]
+    Borne[🕹️ Borne Arcade<br/>(Recalbox)]
+
+    %% Flux de sauvegarde
+    PC -- "1. git push" --> GitHub
+
+    %% Flux de déploiement
+    PC -- "2. make deploy" --> Borne
+
+    %% Style simple
+    style PC fill:#2C3E50,color:white,stroke-width:0px
+    style GitHub fill:#F05032,color:white,stroke-width:0px
+    style Borne fill:#C51A4A,color:white,stroke-width:0px
+```
+
+
+
 ## GPIO Mapping
 Le driver `mk_arcade_joystick_rpi` est activé. Brancher les sticks sur le header GPIO standard.
 

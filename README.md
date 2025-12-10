@@ -63,12 +63,13 @@ graph TD
     RetroArch -->|Loads| DestRoms
 ```
 
+
 ```mermaid
 graph LR
-    %% Noeuds principaux
-    PC[💻 Mon PC<br/>(Code & Config)]
-    GitHub[☁️ GitHub<br/>(Sauvegarde)]
-    Borne[🕹️ Borne Arcade<br/>(Recalbox)]
+    %% Noeuds principaux avec guillemets pour sécuriser le texte
+    PC["💻 Mon PC<br/>(Code & Config)"]
+    GitHub["☁️ GitHub<br/>(Sauvegarde)"]
+    Borne["🕹️ Borne Arcade<br/>(Recalbox)"]
 
     %% Flux de sauvegarde
     PC -- "1. git push" --> GitHub
@@ -81,7 +82,6 @@ graph LR
     style GitHub fill:#F05032,color:white,stroke-width:0px
     style Borne fill:#C51A4A,color:white,stroke-width:0px
 ```
-
 
 
 ## GPIO Mapping

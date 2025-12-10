@@ -136,7 +136,7 @@ Créez votre **borne d'arcade rétro** avec un Raspberry Pi et jouez à vos jeux
 ---
 
 ## 📂 Structure Git recommandée
-
+```
 recalbox-config/
 ├─ ROMs/ # Jeux rétro à placer ici
 │ └─ README.md # Instructions pour ajouter vos ROMs
@@ -148,7 +148,7 @@ recalbox-config/
 │ └─ controllers/ # Fichiers config des manettes
 │ └─ gamepad.cfg # Exemple fourni ci-dessous
 └─ README.md # Ce fichier
-
+```
 
 ---
 

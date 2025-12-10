@@ -1,0 +1,6 @@
+roms/*
+!roms/favorites/
+bios/*
+*.log
+.DS_Store
+.idea/
